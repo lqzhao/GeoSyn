@@ -88,27 +88,6 @@ The fixed detector is GroundingDINO Swin-T OGC, with prompt `robotic arm .`,
 threshold 0.25, highest-confidence box selection, padding 1.35 and full-image
 fallback if detection fails.
 
-Panda additionally uses RobotSeg's `robot` mask, predicted independently for
-each RGB image with threshold zero. Kuka and Baxter use the padded box
-rectangle for the projection-depth evidence. Their synthetic TRAIN crops
-come from synthetic annotation boxes; their TEST crops use RGB detections.
-
-### Import existing observations
-
-If the original frozen GroundingDINO and RobotSeg caches are available,
-convert them without rerunning either external model:
-
-```bash
-python -m geosyn.prepare --config configs/panda.yaml \
-  --import-boxes /path/to/original_groundingdino_panda \
-  --import-masks /path/to/original_robotseg_masks
-```
-
-Repeat `--import-masks` to search several mask directories. For Kuka and
-Baxter, use their configurations and `--import-boxes` only. Imported detector
-caches must carry the original RGB SHA-256 and the RGB-only detector protocol.
-The new cache contains no absolute image paths and can move with the dataset.
-
 ## 4. Model weights
 
 Place the supplied weights in `checkpoints/`:
