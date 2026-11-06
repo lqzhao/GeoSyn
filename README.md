@@ -93,7 +93,7 @@ fallback if detection fails.
 Place the supplied weights in `checkpoints/`:
 
 | File | Purpose |
-|---|---|---|
+|---|---|
 | `panda.pt` | Main Panda evaluation |
 | `kuka.pt` | Main Kuka evaluation | 
 | `baxter.pt` | Main Baxter evaluation |
