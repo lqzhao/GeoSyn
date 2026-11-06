@@ -211,18 +211,6 @@ Reference ADD-AUC values (%), rounded to one decimal:
 | Kuka | 76.0 | 81.6 | — | — | — | — |
 | Baxter | 66.9 | — | — | — | — | — |
 
-Panda's real-subset and six-subset averages are **79.50%** and **80.87%**.
-Full-precision references are in `configs/expected_results.json`.
-ADD uses a 0–100 mm threshold range and the original 0.01 mm integration grid.
-Joint MAE uses the first six observable Panda/Kuka joints and twelve observable
-Baxter arm joints. Baxter's compact J1–J6 columns average corresponding left
-and right joints. The final articulation average weights all five synthetic
-test subsets equally.
-
-GPU architecture, batch size, library versions and regenerated observations
-can affect numerical agreement. Use the supplied weights and original frozen
-observations when comparing directly with the reported numbers.
-
 ## 6. Synthetic training
 
 All robot-task optimization uses synthetic DR TRAIN images. The configurations
@@ -251,48 +239,6 @@ snapshot at the configured reported epoch (`epoch_018.pt`, `epoch_028.pt` or
 same batch size, GPU count and schedule. Use `--checkpoint` when evaluating a
 newly trained snapshot. Reserve at least 6 GB of output disk space per run.
 
-**Checkpoint-selection provenance.** The archived main Panda checkpoint was
-selected using the six-subset development mean; Kuka used DR/Photo mean and
-Baxter used DR. These are development-selected results, rather than a strict
-blind-test protocol. Benchmark images and labels never enter the optimizer or
-the inference input. This clean trainer saves predetermined epoch snapshots
-and does not perform benchmark-driven checkpoint selection. A fresh training
-run is therefore a training recipe reproduction, not a guarantee of identical
-selected scores.
-
-## 7. Checks and layout
-
-The checks performed for this extraction, including the complete-subset
-evaluations and their limits, are recorded in [VALIDATION.md](VALIDATION.md).
-
-```bash
-python -m unittest discover -s tests -v
-
-# Small inference check; the output is explicitly marked incomplete.
-python -m geosyn.evaluate --config configs/panda.yaml --subsets panda_dr \
-  --limit 8 --batch-size 4 --out runs/check_panda
-```
-
-`--device cpu` is available for functional checks. The reference metrics use
-CUDA/BF16. Diagnostic `--limit` outputs are rejected by the main-results reporter.
-
-```text
-geosyn/
-  backbone.py       camera-aware features and query matching
-  model.py          shared/local depth heads and learned reliability
-  geometry.py       projection evidence, metric lifting and rigid alignment
-  kinematics.py     Panda/Kuka/Baxter definitions and differentiable FK
-  data.py           RGB observations and synthetic training targets
-  augmentation.py   camera-consistent synthetic crop augmentation
-  losses.py         image, articulation and metric-state objectives
-  prepare.py        frozen RGB observation generation/import
-  train.py          synthetic training and resume
-  evaluate.py       complete-subset inference and scoring
-  report.py         main-result aggregation
-configs/            the three main experiment configurations
-scripts/            main evaluation and asset verification entry points
-tests/              geometry and label-independent input checks
-```
 
 ## License
 
