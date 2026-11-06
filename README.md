@@ -92,12 +92,12 @@ fallback if detection fails.
 
 Place the supplied weights in `checkpoints/`:
 
-| File | Purpose | Epoch |
+| File | Purpose |
 |---|---|---|
-| `panda.pt` | Main Panda evaluation; Baxter initialization | 18 |
-| `kuka.pt` | Main Kuka evaluation | 28 |
-| `baxter.pt` | Main Baxter evaluation | 30 |
-| `panda_kuka_init.pt` | Panda initialization used by the Kuka experiment | 18 |
+| `panda.pt` | Main Panda evaluation |
+| `kuka.pt` | Main Kuka evaluation | 
+| `baxter.pt` | Main Baxter evaluation |
+
 
 The locally prepared folder includes these inference-only files. They are
 excluded from Git and should be distributed as separate release assets.
