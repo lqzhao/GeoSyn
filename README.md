@@ -1,5 +1,7 @@
 # GeoSyn
 
+**Learning Geometry-Grounded Articulated Robot State Estimation from Synthetic Data**
+
 A standalone implementation of the GeoSyn main experiments on DREAM Panda,
 Kuka iiwa and Baxter. It includes camera-aware DINOv2 prediction,
 articulation-guided metric depth, weighted 3D alignment, synthetic training,
