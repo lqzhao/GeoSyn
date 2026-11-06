@@ -93,39 +93,6 @@ each RGB image with threshold zero. Kuka and Baxter use the padded box
 rectangle for the projection-depth evidence. Their synthetic TRAIN crops
 come from synthetic annotation boxes; their TEST crops use RGB detections.
 
-### Generate from RGB
-
-Install the external tools following their upstream instructions:
-
-- [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO), using `groundingdino_swint_ogc.pth`.
-- [RobotSeg](https://github.com/showlab/RobotSeg), using `robotseg.pt` and `configs/robotseg-infer`.
-
-Use a separate preprocessing environment when needed. RobotSeg documents
-Python 3.11, PyTorch 2.5.1 and torchvision 0.20.1. After installing the upstream
-tools there, install this package with `pip install -e /path/to/GeoSyn`.
-The core GeoSyn training/evaluation environment remains the one in Section 1.
-
-```bash
-# Panda: all six test subsets plus synthetic TRAIN.
-python -m geosyn.prepare --config configs/panda.yaml \
-  --detector-repo /path/to/GroundingDINO \
-  --detector-checkpoint /path/to/groundingdino_swint_ogc.pth \
-  --robotseg-repo /path/to/RobotSeg \
-  --robotseg-checkpoint /path/to/robotseg.pt
-
-# Kuka/Baxter: their complete test subsets; TRAIN needs no cache.
-python -m geosyn.prepare --config configs/kuka.yaml \
-  --detector-repo /path/to/GroundingDINO \
-  --detector-checkpoint /path/to/groundingdino_swint_ogc.pth
-python -m geosyn.prepare --config configs/baxter.yaml \
-  --detector-repo /path/to/GroundingDINO \
-  --detector-checkpoint /path/to/groundingdino_swint_ogc.pth
-```
-
-`--subsets` restricts preparation to named test subsets or Panda `train`.
-Preprocessing is resumable and can be sharded with `torchrun`.
-No per-frame pose annotation is read by this preprocessing command.
-
 ### Import existing observations
 
 If the original frozen GroundingDINO and RobotSeg caches are available,
