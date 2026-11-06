@@ -1,0 +1,32 @@
+robot: kuka
+data_root: ../data/kuka
+observations_root: ../data/observations/kuka
+checkpoint: ../checkpoints/kuka.pt
+dino_weight: ../checkpoints/dinov2_vitl14_pretrain.pth
+initialize_from: ../checkpoints/panda_kuka_init.pt
+input_size: 448
+trainable_last_blocks: 4
+train:
+  folder: kuka_synth_train_dr
+  count: 104977
+  seed: 20261008
+  epochs: 30
+  reported_epoch: 28
+  batch_size: 64
+  learning_rates:
+    heads: 0.0001
+    backbone: 2.5e-06
+    geometry: 5.0e-05
+    translation: 2.5e-05
+  weight_decay: 0.03
+  warmup_fraction: 0.005
+  min_lr_ratio: 0.05
+  geometry_warmup_steps: 100
+  geometry_ramp_steps: 200
+splits:
+  kuka_dr:
+    folder: kuka_synth_test_dr
+    count: 5997
+  kuka_photo:
+    folder: kuka_synth_test_photo
+    count: 5999

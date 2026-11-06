@@ -1,0 +1,44 @@
+robot: panda
+data_root: ../data/panda
+observations_root: ../data/observations/panda
+checkpoint: ../checkpoints/panda.pt
+dino_weight: ../checkpoints/dinov2_vitl14_pretrain.pth
+initialize_from: null
+input_size: 448
+trainable_last_blocks: 4
+train:
+  folder: synthetic/panda_synth_train_dr
+  count: 104972
+  seed: 20261005
+  epochs: 30
+  reported_epoch: 18
+  batch_size: 64
+  learning_rates:
+    heads: 0.0006
+    backbone: 1.0e-05
+    geometry: 0.0002
+    translation: 0.0001
+  weight_decay: 0.03
+  warmup_fraction: 0.005
+  min_lr_ratio: 0.05
+  geometry_warmup_steps: 821
+  geometry_ramp_steps: 1642
+splits:
+  panda_dr:
+    folder: synthetic/panda_synth_test_dr
+    count: 5997
+  panda_photo:
+    folder: synthetic/panda_synth_test_photo
+    count: 5997
+  panda_azure:
+    folder: real/panda-3cam_azure
+    count: 6394
+  panda_kinect:
+    folder: real/panda-3cam_kinect360
+    count: 4966
+  panda_realsense:
+    folder: real/panda-3cam_realsense
+    count: 5944
+  panda_orb:
+    folder: real/panda-orb
+    count: 32315
